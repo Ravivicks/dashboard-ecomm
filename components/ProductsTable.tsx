@@ -151,7 +151,7 @@ export default function ProductTable() {
               <FormLabel>Upload File</FormLabel>
               <FormControl>
                 <Input
-                  className="rounded-xl w-1/3 sm:w-full"
+                  className="rounded-xl w-full md:w-1/3"
                   type="file"
                   accept=".xlsx, .xls"
                   onChange={(e) => field.onChange(e.target.files?.[0])}

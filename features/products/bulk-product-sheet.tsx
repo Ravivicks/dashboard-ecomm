@@ -16,7 +16,7 @@ const BulkProductSheet = () => {
     <>
       <Sheet open={isOpen} onOpenChange={onClose}>
         <SheetContent
-          className="space-y-4 overflow-y-auto w-[1000px]"
+          className="space-y-4 overflow-auto w-[1000px]"
           side="bottom"
         >
           <SheetHeader>
