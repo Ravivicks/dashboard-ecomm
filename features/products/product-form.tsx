@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/form";
 import { productFormSchema } from "@/lib/zod-schema";
 import { Trash } from "lucide-react";
+import FieldArrayComponent from "@/components/FieldArray";
 
 type FormValues = z.infer<typeof productFormSchema>;
 
@@ -33,11 +34,6 @@ export const ProductForm = ({
   const form = useForm<FormValues>({
     resolver: zodResolver(productFormSchema),
     defaultValues: defaultValues,
-  });
-
-  const { fields, append, remove } = useFieldArray({
-    control: form.control,
-    name: "sliderImages",
   });
 
   const handleSubmit = (values: FormValues) => {
@@ -113,36 +109,7 @@ export const ProductForm = ({
 
         {/* Slider Images Field */}
         <div>
-          <FormLabel>Slider Images</FormLabel>
-          <div className="space-y-2">
-            {fields.map((field, index) => (
-              <div key={field.id} className="flex space-x-2 items-center">
-                <FormControl>
-                  <Input
-                    disabled={disabled}
-                    placeholder="Slider Image URL"
-                    {...form.register(`sliderImages.${index}` as const)}
-                  />
-                </FormControl>
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => remove(index)}
-                  disabled={disabled}
-                >
-                  <Trash className="h-4 w-4" />
-                </Button>
-              </div>
-            ))}
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => append("")} // Append an empty string to sliderImages
-              disabled={disabled}
-            >
-              Add Image
-            </Button>
-          </div>
+          <FieldArrayComponent control={form.control} />
         </div>
 
         {/* Submit Button */}

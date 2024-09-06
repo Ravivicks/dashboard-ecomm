@@ -48,7 +48,7 @@ const EditProductSheet = () => {
 
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
-      <SheetContent className="space-y-4">
+      <SheetContent className="space-y-4 overflow-y-auto">
         <SheetHeader>
           <SheetTitle>Edit Product</SheetTitle>
           <SheetDescription>Edit an existing Product</SheetDescription>
