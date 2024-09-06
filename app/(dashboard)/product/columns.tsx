@@ -105,6 +105,7 @@ export const columns: ColumnDef<IProduct>[] = [
         alt={row.original._id}
         width={50}
         height={50}
+        unoptimized
       />
     ),
   },
