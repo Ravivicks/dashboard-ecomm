@@ -25,6 +25,8 @@ export type IProduct = {
   productInformationTech: ProductInfoItem[] | [];
   productInformationAdditional: ProductInfoItem[] | [];
   highestPrice: number;
+  quantity: number;
+  minQuantity: number;
   lowestPrice: number;
   machineCode: string;
   averagePrice: number;

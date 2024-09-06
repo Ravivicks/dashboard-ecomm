@@ -6,6 +6,7 @@ import { ArrowUpDown } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import Actions from "./actions";
 import { IProduct } from "@/types";
+import Image from "next/image";
 
 export const columns: ColumnDef<IProduct>[] = [
   {
@@ -80,6 +81,56 @@ export const columns: ColumnDef<IProduct>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Highest Price
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "image",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Product Image
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <Image
+        src={row.original.image}
+        alt={row.original._id}
+        width={50}
+        height={50}
+      />
+    ),
+  },
+  {
+    accessorKey: "quantity",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Total Quantity
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "minQuantity",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Min. Quantity
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );

@@ -50,7 +50,7 @@ const Account = () => {
         <div>
           <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between">
             <CardTitle className="text-xl line-clamp-1">Product Page</CardTitle>
-            <div className="flex gap-2 sm:flex-col">
+            <div className="flex gap-2 md:flex-row flex-col">
               <Button size={"sm"} onClick={onOpen}>
                 <Plus className="size-4 mr-2" />
                 Upload Bulk Product

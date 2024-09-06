@@ -104,7 +104,11 @@ export async function updateProduct(
     discount: string;
     currentPrice: number;
     image: string;
-    sliderImages: string[]; // Add slider images as an array of URLs
+    sliderImages: string[];
+    quantity: number;
+    minQuantity: number;
+
+    // Add slider images as an array of URLs
   }>
 ) {
   try {

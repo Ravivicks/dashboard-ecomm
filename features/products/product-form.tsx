@@ -11,8 +11,9 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { productFormSchema } from "@/lib/zod-schema";
-import { Trash } from "lucide-react";
+import { Plus, Trash } from "lucide-react";
 import FieldArrayComponent from "@/components/FieldArray";
+import { useSlideOpen } from "@/hooks/use-slide-open";
 
 type FormValues = z.infer<typeof productFormSchema>;
 
@@ -35,6 +36,7 @@ export const ProductForm = ({
     resolver: zodResolver(productFormSchema),
     defaultValues: defaultValues,
   });
+  const { isOpen, onOpen } = useSlideOpen();
 
   const handleSubmit = (values: FormValues) => {
     onSubmit(values);
@@ -64,42 +66,102 @@ export const ProductForm = ({
             </FormItem>
           )}
         />
+        <div className="flex gap-2">
+          {/* Price Field */}
+          <FormField
+            name="price"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Price</FormLabel>
+                <FormControl>
+                  <Input disabled={disabled} placeholder="Price" {...field} />
+                </FormControl>
+              </FormItem>
+            )}
+          />
 
-        {/* Price Field */}
-        <FormField
-          name="price"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Price</FormLabel>
-              <FormControl>
-                <Input disabled={disabled} placeholder="Price" {...field} />
-              </FormControl>
-            </FormItem>
-          )}
-        />
+          {/* Discount Field */}
+          <FormField
+            name="discount"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Discount</FormLabel>
+                <FormControl>
+                  <Input
+                    disabled={disabled}
+                    placeholder="Discount"
+                    {...field}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="flex gap-2">
+          {/* Price Field */}
+          <FormField
+            name="quantity"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Product Quantity</FormLabel>
+                <FormControl>
+                  <Input
+                    disabled={disabled}
+                    placeholder="Enter Total Quantity"
+                    {...field}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      field.onChange(value === "" ? "" : Number(value)); // Allow empty string, convert to number otherwise
+                    }}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
 
-        {/* Discount Field */}
-        <FormField
-          name="discount"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Discount</FormLabel>
-              <FormControl>
-                <Input disabled={disabled} placeholder="Discount" {...field} />
-              </FormControl>
-            </FormItem>
-          )}
-        />
+          {/* Discount Field */}
+          <FormField
+            name="minQuantity"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Min. Quantity</FormLabel>
+                <FormControl>
+                  <Input
+                    disabled={disabled}
+                    placeholder="Enter Minimum Quantity"
+                    {...field}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      field.onChange(value === "" ? "" : Number(value)); // Allow empty string, convert to number otherwise
+                    }}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+        </div>
 
         {/* Image Field */}
+
         <FormField
           name="image"
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Image</FormLabel>
+              <div className="flex justify-between items-center">
+                <FormLabel>Image</FormLabel>
+                <div
+                  onClick={onOpen}
+                  className="flex items-center gap-1 bg-black text-white text-xs cursor-pointer border px-2 py-1 rounded-md"
+                >
+                  <Plus className="size-4" />
+                  Add Slider Images
+                </div>
+              </div>
               <FormControl>
                 <Input disabled={disabled} placeholder="Image Url" {...field} />
               </FormControl>
@@ -108,9 +170,11 @@ export const ProductForm = ({
         />
 
         {/* Slider Images Field */}
-        <div>
-          <FieldArrayComponent control={form.control} />
-        </div>
+        {isOpen && (
+          <div>
+            <FieldArrayComponent control={form.control} />
+          </div>
+        )}
 
         {/* Submit Button */}
         <Button className="w-full" disabled={disabled}>

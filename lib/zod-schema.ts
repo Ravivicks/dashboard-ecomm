@@ -24,7 +24,9 @@ export const productFormSchema = z.object({
   discount: z.string(),
   price: z.number(),
   image: z.string(), // Image should be a string (URL)
-  sliderImages: z.array(z.string()), // Array of strings (URLs)
+  sliderImages: z.array(z.string()),
+  quantity: z.number(),
+  minQuantity: z.number(), // Array of strings (URLs)
 });
 export const enquiryFormSchema = z.object({
   productName: z.string(),

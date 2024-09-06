@@ -10,6 +10,8 @@ export const useEditProduct = (id?: string) => {
       currentPrice: number;
       image: string;
       sliderImages: string[];
+      quantity: number;
+      minQuantity: number;
     }) => {
       const response = await updateProduct(id as string, updateData);
       return response;

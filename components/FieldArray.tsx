@@ -4,7 +4,8 @@ import { useFieldArray, Control } from "react-hook-form";
 import { Input } from "@/components/ui/input"; // Adjust the import based on your project structure
 import { Button } from "@/components/ui/button"; // Adjust the import based on your project structure
 import { FormLabel, FormControl } from "@/components/ui/form"; // Adjust the import based on your project structure
-import { Trash } from "lucide-react";
+import { CrossIcon, Trash, X } from "lucide-react";
+import { useSlideOpen } from "@/hooks/use-slide-open";
 
 type Props = {
   control: Control<any>; // Adjust the type based on your form values
@@ -12,6 +13,7 @@ type Props = {
 };
 
 const FieldArrayComponent: React.FC<Props> = ({ control, disabled }) => {
+  const { onClose } = useSlideOpen();
   const { fields, append, remove } = useFieldArray({
     control,
     name: "sliderImages", // This must match the name in the parent
@@ -19,8 +21,14 @@ const FieldArrayComponent: React.FC<Props> = ({ control, disabled }) => {
 
   return (
     <div>
-      <FormLabel>Slider Images</FormLabel>
-      <div className="space-y-2">
+      <div className="flex justify-between items-center">
+        <FormLabel>Slider Images</FormLabel>
+        <X
+          className="size-4 hover:text-red-600 cursor-pointer"
+          onClick={onClose}
+        />
+      </div>
+      <div className="space-y-2 mt-2">
         {fields.map((field, index) => (
           <div key={field.id} className="flex space-x-2 items-center">
             <FormControl>
