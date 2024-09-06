@@ -26,6 +26,7 @@ export type IProduct = {
   productInformationAdditional: ProductInfoItem[] | [];
   highestPrice: number;
   lowestPrice: number;
+  machineCode: string;
   averagePrice: number;
   discountRate: number;
   description: string;
@@ -87,4 +88,20 @@ export type EnquireProps = {
 export type IPartnerBanner = {
   image: string;
   brand: string;
+};
+
+export type IContact = {
+  _id: string;
+  company: string;
+  address: string;
+  phone: string;
+  workingHours: string;
+  email: string;
+};
+
+export type IPartnerBannerFile = {
+  imageId: any;
+  _id: string;
+  title: string;
+  image: File; // Use File type to represent the uploaded file
 };

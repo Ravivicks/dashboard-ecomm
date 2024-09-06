@@ -4,7 +4,6 @@ import * as React from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
-  Row,
   SortingState,
   flexRender,
   getCoreRowModel,
@@ -24,9 +23,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { Trash } from "lucide-react";
 import { useConfirm } from "@/hooks/use-confirm";
-import { IProduct } from "@/types";
 
 interface DataTableProps<IProduct, TValue> {
   columns: ColumnDef<IProduct, TValue>[];

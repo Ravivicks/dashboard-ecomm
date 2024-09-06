@@ -24,10 +24,14 @@ const Navigation = () => {
       href: "/orders",
       label: "Orders",
     },
-    // {
-    //   href: "/setting",
-    //   label: "Settings",
-    // },
+    {
+      href: "/contact",
+      label: "Contact",
+    },
+    {
+      href: "/banner",
+      label: "Banner",
+    },
   ];
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();

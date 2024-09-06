@@ -1,9 +1,8 @@
 "use server";
 
-import { EnquireProps, IPartnerBanner, IProduct } from "@/types";
+import { IPartnerBanner, IProduct } from "@/types";
 import Product from "../models/product.model";
 import { connectToDB } from "../mongoose";
-import Enquiry from "../models/enquiry.model";
 import PartnerBanner from "../models/banner.model";
 
 const CHUNK_SIZE = 500; // Adjust based on performance testing
@@ -32,9 +31,9 @@ export async function createBulkProducts(products: IProduct[]) {
 }
 
 export async function getAllProducts(): Promise<IProduct[] | any> {
-// page: number = 1,
-// pageSize: number = 20,
-// brand?: string
+  // page: number = 1,
+  // pageSize: number = 20,
+  // brand?: string
   try {
     await connectToDB();
 
@@ -85,12 +84,55 @@ export async function createNewPartnerBanner(banner: IPartnerBanner) {
   }
 }
 
+function formatGoogleDriveLink(imageUrl: string): string {
+  // Check if the URL is in the standard Google Drive file format
+  const regex = /drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/;
+  const match = imageUrl.match(regex);
+
+  if (match && match[1]) {
+    // Return the direct Google Drive download link
+    return `https://drive.google.com/uc?export=view&id=${match[1]}`;
+  } else {
+    // If it's already a direct link or doesn't match the pattern, return the original URL
+    return imageUrl;
+  }
+}
+
 export async function updateProduct(
   id: string,
-  updateData: Partial<{ discount: string; currentPrice: number }>
+  updateData: Partial<{
+    discount: string;
+    currentPrice: number;
+    image: string;
+    sliderImages: string[]; // Add slider images as an array of URLs
+  }>
 ) {
   try {
     await connectToDB();
+
+    // Format the main image URL if provided
+    if (updateData.image) {
+      updateData.image = formatGoogleDriveLink(updateData.image);
+    }
+
+    // Format all slider image URLs if provided
+    if (updateData.sliderImages && Array.isArray(updateData.sliderImages)) {
+      updateData.sliderImages = updateData.sliderImages.map((imageUrl) =>
+        formatGoogleDriveLink(imageUrl)
+      );
+
+      // Add the main image URL to sliderImages if it's not already included
+      if (
+        updateData.image &&
+        !updateData.sliderImages.includes(updateData.image)
+      ) {
+        updateData.sliderImages.push(updateData.image);
+      }
+    } else if (updateData.image) {
+      // If sliderImages is not provided, initialize it with the main image URL
+      updateData.sliderImages = [updateData.image];
+    }
+
     const result = await Product.updateOne({ _id: id }, { $set: updateData });
     return result;
   } catch (error) {

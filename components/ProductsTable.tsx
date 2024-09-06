@@ -19,8 +19,6 @@ import { Input } from "@/components/ui/input";
 import { ProductProps } from "@/types";
 import { useCreateBulkProduct } from "@/features/products/use-bulk-products";
 import { useUser } from "@clerk/nextjs";
-import { Card, CardContent, CardHeader } from "./ui/card";
-import { useBannerOpen } from "@/hooks/use-banner-open";
 
 const FormSchema = z.object({
   username: z.string().min(2, {

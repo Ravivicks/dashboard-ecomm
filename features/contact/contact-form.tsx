@@ -9,19 +9,12 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
-import { enquiryFormSchema } from "@/lib/zod-schema";
+import { contactFormSchema } from "@/lib/zod-schema";
+import { Textarea } from "@/components/ui/textarea";
 
-type FormValues = z.input<typeof enquiryFormSchema>;
+type FormValues = z.input<typeof contactFormSchema>;
 
 type Props = {
   id?: string;
@@ -31,7 +24,7 @@ type Props = {
   disabled?: boolean;
 };
 
-export const EnquiryForm = ({
+export const ContactForm = ({
   id,
   onSubmit,
   defaultValues,
@@ -39,11 +32,10 @@ export const EnquiryForm = ({
   onDelete,
 }: Props) => {
   const form = useForm<FormValues>({
-    resolver: zodResolver(enquiryFormSchema),
+    resolver: zodResolver(contactFormSchema),
     defaultValues: defaultValues,
   });
 
-  const status = form.watch("status");
   const handleSubmit = (values: FormValues) => {
     onSubmit(values);
   };
@@ -55,16 +47,15 @@ export const EnquiryForm = ({
         className="space-y-4 pt-4"
       >
         <FormField
-          name="productName"
+          name="company"
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Title</FormLabel>
+              <FormLabel>Company Name</FormLabel>
               <FormControl>
                 <Input
-                  readOnly
                   disabled={disabled}
-                  placeholder="Produt title"
+                  placeholder="Company Name"
                   {...field}
                 />
               </FormControl>
@@ -72,13 +63,17 @@ export const EnquiryForm = ({
           )}
         />
         <FormField
-          name="productPrice"
+          name="address"
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Price</FormLabel>
+              <FormLabel>Address</FormLabel>
               <FormControl>
-                <Input disabled={disabled} placeholder="Price" {...field} />
+                <Textarea
+                  disabled={disabled}
+                  placeholder="Address"
+                  {...field}
+                />
               </FormControl>
             </FormItem>
           )}
@@ -96,7 +91,7 @@ export const EnquiryForm = ({
           )}
         />
         <FormField
-          name="mobile"
+          name="phone"
           control={form.control}
           render={({ field }) => (
             <FormItem>
@@ -108,70 +103,24 @@ export const EnquiryForm = ({
           )}
         />
         <FormField
-          name="quantity"
+          name="workingHours"
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Quantity</FormLabel>
+              <FormLabel>Working Hours</FormLabel>
               <FormControl>
                 <Input
-                  type="number"
                   disabled={disabled}
-                  placeholder="quantity"
-                  value={field.value === undefined ? "" : field.value}
-                  onChange={(e) => field.onChange(Number(e.target.value))}
+                  placeholder="Working Hours"
+                  {...field}
                 />
               </FormControl>
             </FormItem>
           )}
         />
-        <FormField
-          name="status"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Status</FormLabel>
-              <FormControl>
-                <Select
-                  onValueChange={field.onChange}
-                  // value={field.value}
-                  disabled={disabled}
-                  {...field}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="success">Success</SelectItem>
-                    <SelectItem value="reject">Reject</SelectItem>
-                    <SelectItem value="pending">Pending</SelectItem>
-                  </SelectContent>
-                </Select>
-              </FormControl>
-            </FormItem>
-          )}
-        />
-        {status === "reject" && (
-          <FormField
-            name="reason"
-            control={form.control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Reason For Rejection</FormLabel>
-                <FormControl>
-                  <Input
-                    required
-                    disabled={disabled}
-                    placeholder="Reason"
-                    {...field}
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-        )}
+
         <Button className="w-full" disabled={disabled}>
-          Update Enquairy
+          {!id ? "Add Contact" : "Update Contact"}
         </Button>
       </form>
     </Form>

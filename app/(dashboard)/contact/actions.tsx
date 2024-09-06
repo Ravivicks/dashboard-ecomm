@@ -7,7 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useOpenEnquiry } from "@/hooks/use-open-enquiry";
+import { useOpenContact } from "@/hooks/use-open-contact";
 import { Edit, MoreHorizontal } from "lucide-react";
 import React from "react";
 
@@ -16,7 +16,7 @@ type Props = {
 };
 
 const Actions = ({ id }: Props) => {
-  const { onOpen } = useOpenEnquiry();
+  const { onOpen } = useOpenContact();
 
   return (
     <>
@@ -27,10 +27,7 @@ const Actions = ({ id }: Props) => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem
-            // disabled={deleteMutation.isPending}
-            onClick={() => onOpen(id)}
-          >
+          <DropdownMenuItem onClick={() => onOpen(id)}>
             <Edit className="size-4 mr-2" />
             Edit
           </DropdownMenuItem>

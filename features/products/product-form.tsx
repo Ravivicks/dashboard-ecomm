@@ -1,6 +1,5 @@
 import { z } from "zod";
-import { Trash } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -10,11 +9,11 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@/components/ui/form";
 import { productFormSchema } from "@/lib/zod-schema";
+import { Trash } from "lucide-react";
 
-type FormValues = z.input<typeof productFormSchema>;
+type FormValues = z.infer<typeof productFormSchema>;
 
 type Props = {
   id?: string;
@@ -35,6 +34,12 @@ export const ProductForm = ({
     resolver: zodResolver(productFormSchema),
     defaultValues: defaultValues,
   });
+
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "sliderImages",
+  });
+
   const handleSubmit = (values: FormValues) => {
     onSubmit(values);
   };
@@ -45,6 +50,7 @@ export const ProductForm = ({
         onSubmit={form.handleSubmit(handleSubmit)}
         className="space-y-4 pt-4"
       >
+        {/* Title Field */}
         <FormField
           name="title"
           control={form.control}
@@ -55,13 +61,15 @@ export const ProductForm = ({
                 <Input
                   readOnly
                   disabled={disabled}
-                  placeholder="Produt title"
+                  placeholder="Product title"
                   {...field}
                 />
               </FormControl>
             </FormItem>
           )}
         />
+
+        {/* Price Field */}
         <FormField
           name="price"
           control={form.control}
@@ -74,6 +82,8 @@ export const ProductForm = ({
             </FormItem>
           )}
         />
+
+        {/* Discount Field */}
         <FormField
           name="discount"
           control={form.control}
@@ -86,6 +96,56 @@ export const ProductForm = ({
             </FormItem>
           )}
         />
+
+        {/* Image Field */}
+        <FormField
+          name="image"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Image</FormLabel>
+              <FormControl>
+                <Input disabled={disabled} placeholder="Image Url" {...field} />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+
+        {/* Slider Images Field */}
+        <div>
+          <FormLabel>Slider Images</FormLabel>
+          <div className="space-y-2">
+            {fields.map((field, index) => (
+              <div key={field.id} className="flex space-x-2 items-center">
+                <FormControl>
+                  <Input
+                    disabled={disabled}
+                    placeholder="Slider Image URL"
+                    {...form.register(`sliderImages.${index}` as const)}
+                  />
+                </FormControl>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => remove(index)}
+                  disabled={disabled}
+                >
+                  <Trash className="h-4 w-4" />
+                </Button>
+              </div>
+            ))}
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => append("")} // Append an empty string to sliderImages
+              disabled={disabled}
+            >
+              Add Image
+            </Button>
+          </div>
+        </div>
+
+        {/* Submit Button */}
         <Button className="w-full" disabled={disabled}>
           Update Product
         </Button>

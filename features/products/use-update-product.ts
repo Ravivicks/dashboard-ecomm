@@ -8,6 +8,8 @@ export const useEditProduct = (id?: string) => {
     mutationFn: async (updateData: {
       discount: string;
       currentPrice: number;
+      image: string;
+      sliderImages: string[];
     }) => {
       const response = await updateProduct(id as string, updateData);
       return response;

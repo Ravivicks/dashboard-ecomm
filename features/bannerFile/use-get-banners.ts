@@ -1,0 +1,19 @@
+import { getAllContacts } from "@/lib/actions/contact";
+import { getAllEnquries } from "@/lib/actions/enquries";
+import { getAllBanners } from "@/lib/actions/upload";
+import { EnquireProps, IContact, IPartnerBannerFile } from "@/types";
+import { useQuery } from "@tanstack/react-query";
+
+export const useGetBanners = () => {
+  const query = useQuery<IPartnerBannerFile[], Error>({
+    queryKey: ["banners"],
+    queryFn: async () => {
+      const response = await getAllBanners();
+      if (!response) {
+        throw new Error("Failed to fetch banners");
+      }
+      return response;
+    },
+  });
+  return query;
+};

@@ -1,6 +1,5 @@
 "use client";
 
-import DataCard from "@/components/data-card";
 import DataGrid from "@/components/data-grid";
 
 const Dashboard = () => {

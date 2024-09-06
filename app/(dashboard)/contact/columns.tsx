@@ -5,9 +5,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import Actions from "./actions";
-import { IProduct } from "@/types";
+import { IContact } from "@/types";
 
-export const columns: ColumnDef<IProduct>[] = [
+export const columns: ColumnDef<IContact>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -30,61 +30,76 @@ export const columns: ColumnDef<IProduct>[] = [
     accessorKey: "status",
   },
   {
-    accessorKey: "title",
+    accessorKey: "company",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Product Name
+          Company Name
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
   },
   {
-    accessorKey: "brand",
+    accessorKey: "address",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Brand
+          Address
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
   },
   {
-    accessorKey: "discount",
+    accessorKey: "email",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Discount
+          Email
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
   },
   {
-    accessorKey: "highestPrice",
+    accessorKey: "phone",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Highest Price
+          Mobile
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
   },
+  {
+    accessorKey: "workingHours",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Quantity
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+
   {
     id: "actions",
     cell: ({ row }) => <Actions id={row.original._id} />,

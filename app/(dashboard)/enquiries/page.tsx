@@ -1,11 +1,8 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader2, Plus } from "lucide-react";
 import React from "react";
 import { columns } from "./columns";
 import { DataTable } from "@/components/data-table";
-import { useGetProducts } from "@/features/products/use-get-products";
 import { useGetEnquiries } from "@/features/enquiry/use-get-enquries";
 import { Skeleton } from "@/components/ui/skeleton";
 
