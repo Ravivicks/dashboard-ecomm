@@ -102,6 +102,6 @@ export const columns: ColumnDef<IContact>[] = [
 
   {
     id: "actions",
-    cell: ({ row }) => <Actions id={row.original._id} />,
+    cell: ({ row }) => <Actions id={row.original._id || ""} />,
   },
 ];

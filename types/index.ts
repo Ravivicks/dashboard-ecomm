@@ -91,7 +91,7 @@ export type IPartnerBanner = {
 };
 
 export type IContact = {
-  _id: string;
+  _id?: string;
   company: string;
   address: string;
   phone: string;
