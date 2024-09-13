@@ -15,10 +15,18 @@ export const formBannerSchema = z.object({
   image: z.string(),
   brand: z.string(),
 });
+export const productUpdateFormSchema = z.object({
+  productCode: z.string(),
+  category: z.string(),
+  quantity: z.number(),
+});
 export const formBannerFileSchema = z.object({
   title: z.string().min(1, "Title is required"),
+  company: z.string(),
+  category: z.string(),
   // `image` will be handled as a file separately
 });
+
 export const productFormSchema = z.object({
   title: z.string(),
   discount: z.string(),
@@ -27,6 +35,9 @@ export const productFormSchema = z.object({
   sliderImages: z.array(z.string()),
   quantity: z.number(),
   minQuantity: z.number(), // Array of strings (URLs)
+  category: z.string(),
+  machineCode: z.string(),
+  type: z.string(),
 });
 export const enquiryFormSchema = z.object({
   productName: z.string(),

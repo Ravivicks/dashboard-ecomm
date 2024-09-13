@@ -25,12 +25,16 @@ const EditProductSheet = () => {
 
   const onSubmit = (values: FormValues) => {
     const updateData = {
+      title: values.title,
       discount: values.discount,
-      currentPrice: values.price,
+      lowestPrice: values.price,
       image: values.image,
       sliderImages: values.sliderImages,
       quantity: Number(values.quantity),
       minQuantity: Number(values.minQuantity),
+      category: values.category,
+      machineCode: values.machineCode,
+      type: values.type,
     };
 
     editMutation.mutate(updateData, {
@@ -47,11 +51,14 @@ const EditProductSheet = () => {
     ? {
         title: productQuery.data.title,
         discount: productQuery.data.discount,
-        price: productQuery.data.currentPrice,
+        price: productQuery.data.lowestPrice,
         image: productQuery.data.image,
         sliderImages: productQuery.data.sliderImages || [""],
         quantity: productQuery.data.quantity,
         minQuantity: productQuery.data.minQuantity,
+        category: productQuery.data.category,
+        machineCode: productQuery.data.machineCode,
+        type: productQuery.data.type,
       }
     : {
         title: "",
@@ -61,6 +68,9 @@ const EditProductSheet = () => {
         sliderImages: [""],
         quantity: 1,
         minQuantity: 1,
+        category: "",
+        machineCode: "",
+        type: "",
       };
 
   return (

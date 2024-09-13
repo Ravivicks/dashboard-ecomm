@@ -45,6 +45,34 @@ export const columns: ColumnDef<IProduct>[] = [
     },
   },
   {
+    accessorKey: "category",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Category
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "machineCode",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Product Code
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+  {
     accessorKey: "brand",
     header: ({ column }) => {
       return (
@@ -73,14 +101,14 @@ export const columns: ColumnDef<IProduct>[] = [
     },
   },
   {
-    accessorKey: "highestPrice",
+    accessorKey: "lowestPrice",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Highest Price
+          Price
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );

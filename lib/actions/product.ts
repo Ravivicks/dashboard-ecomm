@@ -1,6 +1,6 @@
 "use server";
 
-import { IPartnerBanner, IProduct } from "@/types";
+import { IPartnerBanner, IProduct, UpdateProductProps } from "@/types";
 import Product from "../models/product.model";
 import { connectToDB } from "../mongoose";
 import PartnerBanner from "../models/banner.model";
@@ -27,6 +27,43 @@ export async function createBulkProducts(products: IProduct[]) {
     return { result: "All products created successfully" };
   } catch (error) {
     console.error("Error creating bulk products:", error);
+  }
+}
+
+export async function updateBulkProducts(products: IProduct[]) {
+  try {
+    await connectToDB();
+
+    for (let i = 0; i < products.length; i += CHUNK_SIZE) {
+      const chunk = products.slice(i, i + CHUNK_SIZE);
+
+      for (const product of chunk) {
+        // Proceed with the update if valid
+        const result = await Product.updateMany(
+          {
+            title: { $regex: product.machineCode, $options: "i" }, // Match title using regex
+          },
+          {
+            $set: {
+              machineCode: product.machineCode,
+              category: product.category,
+              quantity: product.quantity,
+            },
+          }
+        );
+
+        if (result.modifiedCount === 0) {
+          console.error(
+            `No documents updated for machineCode: ${product.machineCode}`
+          );
+        }
+      }
+    }
+
+    return { result: "All products updated successfully" };
+  } catch (error) {
+    console.error("Error updating bulk products:", error);
+    return { error: "Failed to update products" };
   }
 }
 
@@ -101,12 +138,16 @@ function formatGoogleDriveLink(imageUrl: string): string {
 export async function updateProduct(
   id: string,
   updateData: Partial<{
+    title: string;
     discount: string;
-    currentPrice: number;
+    lowestPrice: number;
     image: string;
     sliderImages: string[];
     quantity: number;
     minQuantity: number;
+    category: string;
+    machineCode: string;
+    type: string;
 
     // Add slider images as an array of URLs
   }>
@@ -157,5 +198,45 @@ export async function getBannerByBrand(
   } catch (error) {
     console.log(error);
     return null;
+  }
+}
+
+export async function updateCategoryAndQuantityByCode(
+  productCode: string,
+  category: string,
+  quantity: number
+) {
+  try {
+    await connectToDB();
+
+    // Ensure quantity is a valid number
+    if (isNaN(quantity)) {
+      throw new Error("Invalid quantity");
+    }
+
+    // Prepare update data
+    const updateData: Partial<{
+      category: string;
+      quantity: number;
+    }> = {
+      category: category.trim(),
+      quantity,
+    };
+
+    // Update all products where the title contains the productCode
+    const result = await Product.updateMany(
+      { title: { $regex: productCode, $options: "i" } }, // Case-insensitive regex search
+      { $set: updateData }
+    );
+
+    // Check if the update was successful
+    if (result.modifiedCount === 0) {
+      throw new Error("No products found or no changes made");
+    }
+
+    return result;
+  } catch (error) {
+    console.error("Error updating category and quantity by code:", error);
+    throw new Error("Failed to update category and quantity by code");
   }
 }

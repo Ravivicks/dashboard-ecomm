@@ -5,6 +5,8 @@ import { ObjectId } from "mongodb";
 const bannerFileSchema: Schema = new Schema(
   {
     title: { type: String, required: true },
+    company: { type: String },
+    category: { type: String },
     imageId: { type: ObjectId, required: true }, // Store the GridFS file ID
   },
   { timestamps: true }

@@ -19,6 +19,7 @@ const productSchema: Schema = new Schema(
       },
     ],
     pdfFile: { type: String },
+    type: { type: String },
     quantity: { type: Number },
     minQuantity: { type: Number },
     lowestPrice: { type: Number },

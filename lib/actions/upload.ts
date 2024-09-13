@@ -46,6 +46,8 @@ export async function createNewPartnerBanner(formData: FormData) {
   try {
     const file = formData.get("image") as File;
     const title = formData.get("title") as string;
+    const category = formData.get("category") as string;
+    const company = formData.get("company") as string;
 
     if (!file || !title) {
       throw new Error("Missing file or title");
@@ -82,6 +84,8 @@ export async function createNewPartnerBanner(formData: FormData) {
 
     const banner = {
       title,
+      company,
+      category,
       imageId,
     };
 
@@ -219,12 +223,14 @@ export async function updatePartnerBanner(id: string, formData: FormData) {
 
     const file = formData.get("image") as File | null;
     const title = formData.get("title") as string;
+    const company = formData.get("company") as string;
+    const category = formData.get("category") as string;
 
     if (!title) {
       throw new Error("Title is required");
     }
 
-    let updateData: Record<string, any> = { title };
+    let updateData: Record<string, any> = { title, company, category };
 
     if (file) {
       // Convert file to Buffer directly on the server side

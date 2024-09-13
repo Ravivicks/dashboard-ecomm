@@ -19,6 +19,7 @@ export type IProduct = {
   title: string;
   discount: string;
   brand: string;
+  type: string;
   currentPrice: number;
   originalPrice: number;
   priceHistory: PriceHistoryItem[] | [];
@@ -74,6 +75,14 @@ export type ProductProps = {
   PDP: string;
 };
 
+export type UpdateProductProps = {
+  "Item Category": string;
+  "Item Description": string;
+  "Item MLFB/Part Number": string;
+  "Item Rating": string;
+  Count: number;
+};
+
 export type EnquireProps = {
   _id: string;
   email: string;
@@ -105,5 +114,20 @@ export type IPartnerBannerFile = {
   imageId: any;
   _id: string;
   title: string;
+  company: string;
+  category: string;
   image: File; // Use File type to represent the uploaded file
+};
+export type IFeaturedCategory = {
+  imageId: any;
+  _id: string;
+  category: string;
+  image: File; // Use File type to represent the uploaded file
+  categoryImage: File;
+};
+
+export type ISubscriber = {
+  _id?: string;
+  email: string;
+  status: string;
 };

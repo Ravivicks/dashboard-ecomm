@@ -6,12 +6,16 @@ export const useEditProduct = (id?: string) => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: async (updateData: {
+      title: string;
       discount: string;
-      currentPrice: number;
+      lowestPrice: number;
       image: string;
       sliderImages: string[];
       quantity: number;
       minQuantity: number;
+      category: string;
+      machineCode: string;
+      type: string;
     }) => {
       const response = await updateProduct(id as string, updateData);
       return response;

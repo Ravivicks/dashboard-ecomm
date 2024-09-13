@@ -57,7 +57,7 @@ export const ProductForm = ({
               <FormLabel>Title</FormLabel>
               <FormControl>
                 <Input
-                  readOnly
+                  // readOnly
                   disabled={disabled}
                   placeholder="Product title"
                   {...field}
@@ -67,6 +67,41 @@ export const ProductForm = ({
           )}
         />
         <div className="flex gap-2">
+          <FormField
+            name="machineCode"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Product Code</FormLabel>
+                <FormControl>
+                  <Input
+                    // readOnly
+                    disabled={disabled}
+                    placeholder="Product Code"
+                    {...field}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="category"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Product Category</FormLabel>
+                <FormControl>
+                  <Input
+                    disabled={disabled}
+                    placeholder="Product Category"
+                    {...field}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="flex gap-2">
           {/* Price Field */}
           <FormField
             name="price"
@@ -75,7 +110,15 @@ export const ProductForm = ({
               <FormItem>
                 <FormLabel>Price</FormLabel>
                 <FormControl>
-                  <Input disabled={disabled} placeholder="Price" {...field} />
+                  <Input
+                    disabled={disabled}
+                    placeholder="Price"
+                    {...field}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      field.onChange(value === "" ? "" : Number(value)); // Allow empty string, convert to number otherwise
+                    }}
+                  />
                 </FormControl>
               </FormItem>
             )}
@@ -144,7 +187,22 @@ export const ProductForm = ({
             )}
           />
         </div>
-
+        <FormField
+          name="type"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Product Type</FormLabel>
+              <FormControl>
+                <Input
+                  disabled={disabled}
+                  placeholder="Product Type"
+                  {...field}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
         {/* Image Field */}
 
         <FormField

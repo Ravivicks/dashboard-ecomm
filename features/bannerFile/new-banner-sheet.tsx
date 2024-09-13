@@ -23,6 +23,8 @@ const NewBannerFileSheet = () => {
 
     // Append form fields to FormData
     formData.append("title", values.title);
+    formData.append("category", values.category);
+    formData.append("company", values.company);
 
     // Handle the optional file
     if (values.file) {
@@ -47,6 +49,8 @@ const NewBannerFileSheet = () => {
           disabled={false}
           defaultValues={{
             title: "",
+            company: "",
+            category: "",
           }}
         />
       </SheetContent>

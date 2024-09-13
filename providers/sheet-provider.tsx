@@ -6,6 +6,8 @@ import EditContactSheet from "@/features/contact/edit-contact-sheet";
 import NewContactSheet from "@/features/contact/new-contact-sheet";
 import EditEnquirySheet from "@/features/enquiry/edit-enquiry-sheet";
 import BulkProductSheet from "@/features/products/bulk-product-sheet";
+import ProductUpdateDialog from "@/features/products/bulk-product-update-dialog";
+import BulkProductUpdateSheet from "@/features/products/bulk-update-sheet";
 import EditProductSheet from "@/features/products/edit-product-sheet";
 import { useMountedState } from "react-use";
 
@@ -25,6 +27,8 @@ const SheetProvider = () => {
       <NewContactSheet />
       <NewBannerFileSheet />
       <EditBannerSheet />
+      <ProductUpdateDialog />
+      <BulkProductUpdateSheet />
     </>
   );
 };

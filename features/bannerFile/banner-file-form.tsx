@@ -15,6 +15,13 @@ import Image from "next/image";
 import { useGetBanner } from "./use-get-banner";
 import { useState, useEffect } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectValue,
+} from "@/components/ui/select";
 
 type FormValues = z.infer<typeof formBannerFileSchema>;
 
@@ -88,9 +95,68 @@ export const BannerFileForm = ({
             <FormItem>
               <FormLabel>Title</FormLabel>
               <FormControl>
+                <Select
+                  disabled={disabled}
+                  value={field.value}
+                  onValueChange={(value) => field.onChange(value)}
+                >
+                  <SelectTrigger>
+                    <Button variant="outline" className="w-full">
+                      {field.value || "Select Title"}
+                    </Button>
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="home">Home</SelectItem>
+                    <SelectItem value="Featured-category">
+                      Featured Category
+                    </SelectItem>
+                    <SelectItem value="industrial-automation">
+                      Industrial Automation
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </FormControl>
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          name="company"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Company</FormLabel>
+              <FormControl>
+                <Select
+                  disabled={disabled}
+                  value={field.value}
+                  onValueChange={(value) => field.onChange(value)}
+                >
+                  <SelectTrigger>
+                    <Button variant="outline" className="w-full">
+                      {field.value || "Select Company"}
+                    </Button>
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Siemens">Siemens</SelectItem>
+                    <SelectItem value="DEIF">DEIF</SelectItem>
+                    <SelectItem value="pro-face">Pro-face</SelectItem>
+                    <SelectItem value="schneider">Schneider</SelectItem>
+                  </SelectContent>
+                </Select>
+              </FormControl>
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          name="category"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Category</FormLabel>
+              <FormControl>
                 <Input
                   disabled={disabled}
-                  placeholder="Banner Title"
+                  placeholder="Category name"
                   {...field}
                 />
               </FormControl>
@@ -148,6 +214,7 @@ export const BannerFileForm = ({
             )}
           </div>
         )}
+
         <Button type="submit" className="w-full" disabled={disabled}>
           {!id ? "Add Banner" : "Update Banner"}
         </Button>

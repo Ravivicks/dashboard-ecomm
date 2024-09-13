@@ -18,13 +18,15 @@ type FormValues = z.input<typeof formBannerFileSchema>;
 
 const EditBannerSheet = () => {
   const { isOpen, onClose, id } = useOpenEditBanner();
-  const bannerQuery = useGetBanner(id as string);
+  const { data, isLoading } = useGetBanner(id as string);
   const editMutation = useEditPartnerBanner(id);
 
   const onSubmit = (values: FormValues & { file?: File }) => {
     const formData = new FormData();
 
     formData.append("title", values.title);
+    formData.append("company", values.company);
+    formData.append("category", values.category);
 
     if (values.file) {
       formData.append("image", values.file);
@@ -35,15 +37,17 @@ const EditBannerSheet = () => {
     });
   };
 
-  const isLoading = bannerQuery.isLoading;
-
-  const defaultValue = bannerQuery.data
+  const defaultValue = data
     ? {
-        title: bannerQuery.data.title,
+        title: data.title,
+        company: data.company,
+        category: data.category,
         file: undefined, // Placeholder, handle file input in the form
       }
     : {
         title: "",
+        company: "",
+        category: "",
         file: undefined, // Placeholder for a new banner
       };
 
