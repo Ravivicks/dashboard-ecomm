@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { IComment, IReply } from "@/types";
 import { updateReview } from "@/lib/actions/review";
 
 export const useUpdateReview = (id?: string) => {
@@ -11,7 +10,7 @@ export const useUpdateReview = (id?: string) => {
       return response;
     },
     onSuccess: () => {
-      toast.success("Reply Submitted Successfully");
+      toast.success("Review Updated Successfully");
       queryClient.invalidateQueries({ queryKey: ["order", { id }] });
       queryClient.invalidateQueries({ queryKey: ["reviews"] });
     },

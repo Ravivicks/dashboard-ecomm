@@ -1,15 +1,9 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Edit2, Plus } from "lucide-react";
 import React from "react";
 import { columns } from "./columns";
 import { DataTable } from "@/components/data-table";
-import { useGetProducts } from "@/features/products/use-get-products";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useOpenBulkProduct } from "@/hooks/use-open-bulk-product";
-import { useUpdateDialogOpen } from "@/hooks/use-product-open";
-import { useOpenBulkProductUpdate } from "@/hooks/use-open-bulk-update-by-excel";
 import { useGetOrderss } from "@/features/checkout/use-get-orders";
 
 const Account = () => {
@@ -49,7 +43,7 @@ const Account = () => {
       <Card className="border-none drop-shadow-sm">
         <div>
           <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between">
-            <CardTitle className="text-xl line-clamp-1">Product Page</CardTitle>
+            <CardTitle className="text-xl line-clamp-1">Order Page</CardTitle>
           </CardHeader>
           <CardContent>
             <DataTable
