@@ -38,7 +38,8 @@ const DataGrid = () => {
       />
       <DataCard
         title="Order"
-        total={1000}
+        total={data?.orders.total}
+        success={data?.orders.completed}
         icon={FaArrowTrendUp}
         variant="default"
         description={"Order Summary"}

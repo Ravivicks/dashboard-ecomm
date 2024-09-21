@@ -1,37 +1,19 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Edit2, Plus } from "lucide-react";
 import React from "react";
 import { columns } from "./columns";
 import { DataTable } from "@/components/data-table";
-import { useGetEnquiries } from "@/features/enquiry/use-get-enquries";
+import { useGetProducts } from "@/features/products/use-get-products";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useOpenBulkProduct } from "@/hooks/use-open-bulk-product";
+import { useUpdateDialogOpen } from "@/hooks/use-product-open";
+import { useOpenBulkProductUpdate } from "@/hooks/use-open-bulk-update-by-excel";
+import { useGetOrderss } from "@/features/checkout/use-get-orders";
 
 const Account = () => {
-  const { data, isPending } = useGetEnquiries();
-  const [selectedType, setSelectedType] = React.useState<string | null>(
-    "quickQuote"
-  );
-
-  const handleSelectChange = (value: string | null) => {
-    setSelectedType(value);
-  };
-
-  const enquiryTypeOptions = [
-    { value: "all", label: "All Enquiries" }, // Ensure "all" is a valid string
-    { value: "cart", label: "Cart" },
-    { value: "priceRequest", label: "Price Request" },
-    { value: "quickQuote", label: "Quick Quote" },
-    { value: "quoteRequest", label: "Quote Request" },
-    { value: "serviceQuote", label: "Service Quote" },
-    { value: "entireProjectQuote", label: "Entire Project Quote" },
-    { value: "contactQuery", label: "Contact Enquiry" },
-  ];
-
-  // Filter data based on selected enquiryType
-  const filteredData =
-    selectedType && selectedType !== "all"
-      ? data?.filter((enquiry) => enquiry.enquiryType === selectedType)
-      : data;
+  const { data, isPending } = useGetOrderss();
 
   if (isPending) {
     return (
@@ -41,6 +23,7 @@ const Account = () => {
             <CardTitle className="text-xl line-clamp-1">
               <Skeleton className="h-6 w-32" />
             </CardTitle>
+            <Skeleton className="size-14 h-6 w-20" />
           </CardHeader>
           <CardContent>
             <div>
@@ -64,20 +47,19 @@ const Account = () => {
   return (
     <div className="max-w-screen-2xl mx-auto w-full pb-10 -mt-24">
       <Card className="border-none drop-shadow-sm">
-        <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between">
-          <CardTitle className="text-xl line-clamp-1">Enquiry Page</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <DataTable
-            columns={columns}
-            data={filteredData || []}
-            filterKey="email"
-            disable={false}
-            selectOptions={enquiryTypeOptions}
-            selectedValue={selectedType}
-            onSelectChange={handleSelectChange} // This now accepts string | null
-          />
-        </CardContent>
+        <div>
+          <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between">
+            <CardTitle className="text-xl line-clamp-1">Product Page</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <DataTable
+              columns={columns}
+              data={data || []}
+              filterKey="category"
+              disable={false}
+            />
+          </CardContent>
+        </div>
       </Card>
     </div>
   );

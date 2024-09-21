@@ -9,8 +9,8 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@/components/ui/form";
+import { reviewFormSchema } from "@/lib/zod-schema";
 import {
   Select,
   SelectContent,
@@ -19,9 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { enquiryFormSchema } from "@/lib/zod-schema";
-
-type FormValues = z.input<typeof enquiryFormSchema>;
+type FormValues = z.infer<typeof reviewFormSchema>;
 
 type Props = {
   id?: string;
@@ -31,7 +29,7 @@ type Props = {
   disabled?: boolean;
 };
 
-export const EnquiryForm = ({
+export const ReviewForm = ({
   id,
   onSubmit,
   defaultValues,
@@ -39,11 +37,10 @@ export const EnquiryForm = ({
   onDelete,
 }: Props) => {
   const form = useForm<FormValues>({
-    resolver: zodResolver(enquiryFormSchema),
+    resolver: zodResolver(reviewFormSchema),
     defaultValues: defaultValues,
   });
 
-  const status = form.watch("status");
   const handleSubmit = (values: FormValues) => {
     onSubmit(values);
   };
@@ -54,43 +51,72 @@ export const EnquiryForm = ({
         onSubmit={form.handleSubmit(handleSubmit)}
         className="space-y-4 pt-4"
       >
+        {/* Title Field */}
         <FormField
-          name="email"
+          name="userId"
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input disabled={disabled} placeholder="email" {...field} />
-              </FormControl>
-            </FormItem>
-          )}
-        />
-        <FormField
-          name="mobile"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Mobile</FormLabel>
-              <FormControl>
-                <Input disabled={disabled} placeholder="mobile" {...field} />
-              </FormControl>
-            </FormItem>
-          )}
-        />
-        <FormField
-          name="quantity"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Quantity</FormLabel>
+              <FormLabel>User Id</FormLabel>
               <FormControl>
                 <Input
-                  type="number"
+                  // readOnly
                   disabled={disabled}
-                  placeholder="quantity"
-                  value={field.value === undefined ? "" : field.value}
-                  onChange={(e) => field.onChange(Number(e.target.value))}
+                  placeholder="Product title"
+                  {...field}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <div className="flex gap-4">
+          <FormField
+            name="firstName"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>First Name</FormLabel>
+                <FormControl>
+                  <Input
+                    // readOnly
+                    disabled={disabled}
+                    placeholder="Product Code"
+                    {...field}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="lastName"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Last Name</FormLabel>
+                <FormControl>
+                  <Input
+                    // readOnly
+                    disabled={disabled}
+                    placeholder="Product Code"
+                    {...field}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+        </div>
+        <FormField
+          name="comment"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Comment</FormLabel>
+              <FormControl>
+                <Input
+                  // readOnly
+                  disabled={disabled}
+                  placeholder="Product Code"
+                  {...field}
                 />
               </FormControl>
             </FormItem>
@@ -113,36 +139,18 @@ export const EnquiryForm = ({
                     <SelectValue placeholder="Status" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="success">Success</SelectItem>
-                    <SelectItem value="reject">Reject</SelectItem>
-                    <SelectItem value="pending">Pending</SelectItem>
+                    <SelectItem value="active">Show</SelectItem>
+                    <SelectItem value="inactive">Hide</SelectItem>
                   </SelectContent>
                 </Select>
               </FormControl>
             </FormItem>
           )}
         />
-        {status === "reject" && (
-          <FormField
-            name="reason"
-            control={form.control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Reason For Rejection</FormLabel>
-                <FormControl>
-                  <Input
-                    required
-                    disabled={disabled}
-                    placeholder="Reason"
-                    {...field}
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-        )}
+
+        {/* Submit Button */}
         <Button className="w-full" disabled={disabled}>
-          Update Enquairy
+          Update Product
         </Button>
       </form>
     </Form>

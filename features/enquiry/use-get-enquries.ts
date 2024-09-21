@@ -1,9 +1,9 @@
 import { getAllEnquries } from "@/lib/actions/enquries";
-import { EnquireProps } from "@/types";
+import { CommonEnquireProps, EnquireProps } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 
 export const useGetEnquiries = () => {
-  const query = useQuery<EnquireProps[], Error>({
+  const query = useQuery<CommonEnquireProps[], Error>({
     queryKey: ["enquries"],
     queryFn: async () => {
       const response = await getAllEnquries();

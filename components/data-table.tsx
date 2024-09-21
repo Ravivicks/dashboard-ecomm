@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 import {
   ColumnDef,
@@ -23,13 +21,24 @@ import {
 } from "@/components/ui/table";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useConfirm } from "@/hooks/use-confirm";
+import { Label } from "./ui/label";
 
 interface DataTableProps<IProduct, TValue> {
   columns: ColumnDef<IProduct, TValue>[];
   data: IProduct[];
   filterKey: string;
   disable?: boolean;
+  selectOptions?: { value: string; label: string }[]; // New prop for Select options
+  selectedValue?: string | null; // New prop for selected value
+  onSelectChange?: (value: string | null) => void; // New prop for handling Select changes
 }
 
 export function DataTable<IProduct, TValue>({
@@ -37,6 +46,9 @@ export function DataTable<IProduct, TValue>({
   data,
   filterKey,
   disable,
+  selectOptions = [], // Default to empty array
+  selectedValue,
+  onSelectChange,
 }: DataTableProps<IProduct, TValue>) {
   const [ConfirmationDialog, confirm] = useConfirm(
     "Are you sure want to delete?",
@@ -47,6 +59,7 @@ export function DataTable<IProduct, TValue>({
     []
   );
   const [rowSelection, setRowSelection] = React.useState({});
+
   const table = useReactTable({
     data,
     columns,
@@ -67,33 +80,48 @@ export function DataTable<IProduct, TValue>({
   return (
     <div>
       <ConfirmationDialog />
-      <div className="flex items-center py-4">
+      <div className="flex items-center justify-between py-4 space-x-4">
         <Input
-          placeholder={`filter ${filterKey}`}
+          placeholder={`Filter ${filterKey}`}
           value={(table.getColumn(filterKey)?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn(filterKey)?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
+        {selectOptions?.length > 0 && ( // Check if selectOptions has items
+          <div className="flex items-center gap-2">
+            <Label className="text-[16px]">Filter By Type:</Label>
+            <Select onValueChange={onSelectChange} value={selectedValue ?? ""}>
+              <SelectTrigger className="w-48">
+                <SelectValue placeholder="Select Filter" />
+              </SelectTrigger>
+              <SelectContent>
+                {selectOptions?.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        )}
       </div>
       <div className="rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  );
-                })}
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </TableHead>
+                ))}
               </TableRow>
             ))}
           </TableHeader>

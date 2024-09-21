@@ -36,6 +36,10 @@ const Navigation = () => {
       href: "/subscriber",
       label: "Subscriber",
     },
+    {
+      href: "/reviews",
+      label: "Reviews",
+    },
   ];
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();

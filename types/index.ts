@@ -131,3 +131,97 @@ export type ISubscriber = {
   email: string;
   status: string;
 };
+
+export type CommonEnquireProps = {
+  _id?: string;
+  email: string;
+  mobile: string;
+  productName?: string;
+  productId?: string;
+  productPrice?: number;
+  enquiryDescription: string;
+  quantity?: number;
+  status: "pending" | "approved" | "rejected";
+  reason?: string;
+  enquiryType: string;
+  cartProduct?: {
+    productName: string;
+    productId: string;
+    productPrice: number;
+    quantity: number;
+  }[];
+  fullName?: string;
+};
+
+export type IAddress = {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  address: string;
+  country: string;
+  city: string;
+  state: string;
+  phone: string;
+  zipcode: string;
+};
+
+export interface PaymentDetails {
+  method: string; // e.g., 'credit_card', 'paypal'
+  status: string; // e.g., 'pending', 'completed', 'failed'
+  transactionId: string;
+}
+
+export interface OrderItem {
+  productId: string;
+  name: string;
+  quantity: number;
+  price: number;
+  total: number;
+}
+
+export interface CheckoutData {
+  _id: string;
+  userId: string;
+  items: OrderItem[];
+  totalAmount: number;
+  paymentDetails: PaymentDetails;
+  shippingAddress: IAddress;
+  billingAddress: IAddress;
+  status: string;
+  orderId: string;
+  createdAt?: string;
+}
+
+export type IReply = {
+  _id?: string;
+  userId: string;
+  comment: string;
+  firstName?: string;
+  lastName?: string;
+};
+
+export interface ILike {
+  _id: string;
+  userId: string;
+  isLike: boolean;
+  isUnlike: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type IComment = {
+  _id?: string;
+  productId: string; // Reference to the product being reviewed
+  userId: string;
+  comment: string;
+  rating: number;
+  status: string;
+  firstName?: string;
+  lastName?: string;
+  userAvatar?: string;
+  replies?: IReply[];
+  createdAt?: string;
+  likes?: ILike[]; // Array of like actions
+  unlikes?: ILike[]; // Array of unlike actions
+};

@@ -96,6 +96,14 @@ const DataCard = ({
               </h1>
             </div>
           )}
+          {title === "Order" && (
+            <div>
+              <p>Success Orders</p>
+              <h1 className="font-bold text-2xl mb-2 line-clamp-1 break-all">
+                <CountUp preserveValue start={0} end={success} />
+              </h1>
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>

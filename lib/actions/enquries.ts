@@ -1,7 +1,8 @@
 "use server";
-import { EnquireProps } from "@/types";
+import { CommonEnquireProps, EnquireProps } from "@/types";
 import { connectToDB } from "../mongoose";
 import Enquiry from "../models/enquiry.model";
+import CommonEnquiry from "../models/common.enquiry.model";
 
 export async function createNewEnquiry(enquiry: EnquireProps) {
   try {
@@ -14,11 +15,11 @@ export async function createNewEnquiry(enquiry: EnquireProps) {
   }
 }
 
-export async function getAllEnquries(): Promise<EnquireProps[] | any> {
+export async function getAllEnquries(): Promise<CommonEnquireProps[] | any> {
   try {
     await connectToDB();
 
-    const products = await Enquiry.find();
+    const products = await CommonEnquiry.find();
 
     return JSON.parse(JSON.stringify(products));
   } catch (error) {
@@ -29,12 +30,12 @@ export async function getAllEnquries(): Promise<EnquireProps[] | any> {
 
 export async function getEnquiryById(
   enquiryId: string
-): Promise<EnquireProps | null> {
+): Promise<CommonEnquireProps | null> {
   try {
     await connectToDB();
 
     // Use lean() to get a plain JavaScript object
-    const product = await Enquiry.findOne({ _id: enquiryId });
+    const product = await CommonEnquiry.findOne({ _id: enquiryId });
     return JSON.parse(JSON.stringify(product));
   } catch (error) {
     console.log(error);
@@ -48,7 +49,10 @@ export async function updateEnquiry(
 ) {
   try {
     await connectToDB();
-    const result = await Enquiry.updateOne({ _id: id }, { $set: updateData });
+    const result = await CommonEnquiry.updateOne(
+      { _id: id },
+      { $set: updateData }
+    );
     return result;
   } catch (error) {
     console.error("Error updating enquiry:", error);

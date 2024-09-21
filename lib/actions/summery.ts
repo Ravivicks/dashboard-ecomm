@@ -1,5 +1,7 @@
 "use server";
 
+import Checkout from "../models/checkout.model";
+import CommonEnquiry from "../models/common.enquiry.model";
 import Enquiry from "../models/enquiry.model";
 import Product from "../models/product.model";
 import { connectToDB } from "../mongoose";
@@ -15,11 +17,11 @@ export interface IStats {
     pending: number;
     completed: number;
   };
-  //   orders: {
-  //     total: number;
-  //     completed: number;
-  //     rejected: number;
-  //   };
+  orders: {
+    total: number;
+    completed: number;
+    rejected: number;
+  };
 }
 
 export async function getStats(): Promise<IStats | null> {
@@ -34,17 +36,21 @@ export async function getStats(): Promise<IStats | null> {
       isOutOfStock: true,
     });
 
-    const enquiriesCount = await Enquiry.countDocuments();
-    const pendingEnquiriesCount = await Enquiry.countDocuments({
+    const enquiriesCount = await CommonEnquiry.countDocuments();
+    const pendingEnquiriesCount = await CommonEnquiry.countDocuments({
       status: "pending",
     });
     const completedEnquiriesCount = await Enquiry.countDocuments({
       status: "success",
     });
 
-    // const ordersCount = await Order.countDocuments();
-    // const completedOrdersCount = await Order.countDocuments({ status: 'completed' });
-    // const rejectedOrdersCount = await Order.countDocuments({ status: 'rejected' });
+    const ordersCount = await Checkout.countDocuments();
+    const completedOrdersCount = await Checkout.countDocuments({
+      status: "completed",
+    });
+    const rejectedOrdersCount = await Checkout.countDocuments({
+      status: "processing",
+    });
 
     return {
       products: {
@@ -57,11 +63,11 @@ export async function getStats(): Promise<IStats | null> {
         pending: pendingEnquiriesCount,
         completed: completedEnquiriesCount,
       },
-      //   orders: {
-      //     total: ordersCount,
-      //     completed: completedOrdersCount,
-      //     rejected: rejectedOrdersCount,
-      //   },
+      orders: {
+        total: ordersCount,
+        completed: completedOrdersCount,
+        rejected: rejectedOrdersCount,
+      },
     };
   } catch (error) {
     console.log(error);

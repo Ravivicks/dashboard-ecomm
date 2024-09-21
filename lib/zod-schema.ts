@@ -39,14 +39,26 @@ export const productFormSchema = z.object({
   machineCode: z.string(),
   type: z.string(),
 });
+export const orderFormSchema = z.object({
+  userId: z.string(),
+  orderId: z.string(),
+  status: z.string(),
+});
+export const reviewFormSchema = z.object({
+  userId: z.string(),
+  comment: z.string(),
+  firstName: z.string(),
+  lastName: z.string(),
+  status: z.string(),
+});
 export const enquiryFormSchema = z.object({
   productName: z.string(),
-  productPrice: z.number(),
+  productPrice: z.number().optional(), // Allow undefined
   email: z.string(),
   mobile: z.string(),
-  quantity: z.number(),
+  quantity: z.number().optional(), // Allow undefined
   status: z.string(),
-  reason: z.string(),
+  reason: z.string().optional(), // Allow undefined
 });
 export const contactFormSchema = z.object({
   company: z.string(),
