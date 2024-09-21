@@ -1,7 +1,5 @@
-import { getAllContacts } from "@/lib/actions/contact";
-import { getAllEnquries } from "@/lib/actions/enquries";
 import { getAllBanners } from "@/lib/actions/upload";
-import { EnquireProps, IContact, IPartnerBannerFile } from "@/types";
+import { IPartnerBannerFile } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 
 export const useGetBanners = () => {
@@ -14,6 +12,7 @@ export const useGetBanners = () => {
       }
       return response;
     },
+    refetchOnWindowFocus: false,
   });
   return query;
 };

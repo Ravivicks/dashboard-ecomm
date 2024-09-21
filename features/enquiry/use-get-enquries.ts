@@ -12,6 +12,7 @@ export const useGetEnquiries = () => {
       }
       return response;
     },
+    refetchOnWindowFocus: false,
   });
   return query;
 };

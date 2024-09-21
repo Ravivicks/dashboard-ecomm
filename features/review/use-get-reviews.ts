@@ -12,6 +12,7 @@ export const useGetReviews = () => {
       }
       return response;
     },
+    refetchOnWindowFocus: false,
   });
   return query;
 };

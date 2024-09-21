@@ -13,6 +13,7 @@ export const useGetEnquiry = (id: string) => {
       }
       return response;
     },
+    refetchOnWindowFocus: false,
   });
   return query;
 };

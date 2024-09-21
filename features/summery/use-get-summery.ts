@@ -11,6 +11,7 @@ export const useGetSummery = () => {
       }
       return response;
     },
+    refetchOnWindowFocus: false,
   });
 
   return query;

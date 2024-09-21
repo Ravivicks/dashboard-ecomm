@@ -12,6 +12,7 @@ export const useGetOrderss = () => {
       }
       return response;
     },
+    refetchOnWindowFocus: false,
   });
   return query;
 };

@@ -12,6 +12,7 @@ export const useGetContacts = () => {
       }
       return response;
     },
+    refetchOnWindowFocus: false,
   });
   return query;
 };

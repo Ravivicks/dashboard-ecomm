@@ -13,6 +13,7 @@ export const useGetBanner = (brand: string) => {
       }
       return response;
     },
+    refetchOnWindowFocus: false,
   });
   return query;
 };

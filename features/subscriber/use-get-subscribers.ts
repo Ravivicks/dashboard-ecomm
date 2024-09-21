@@ -12,6 +12,7 @@ export const useGetSubscribers = () => {
       }
       return response;
     },
+    refetchOnWindowFocus: false,
   });
   return query;
 };
