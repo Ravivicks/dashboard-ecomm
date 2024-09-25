@@ -143,7 +143,9 @@ export const BannerFileForm = ({
                     <SelectItem value="Siemens">Siemens</SelectItem>
                     <SelectItem value="DEIF">DEIF</SelectItem>
                     <SelectItem value="pro-face">Pro-face</SelectItem>
-                    <SelectItem value="schneider">Schneider</SelectItem>
+                    <SelectItem value="Schneider Electric">
+                      Schneider Electric
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </FormControl>
