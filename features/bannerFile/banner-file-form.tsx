@@ -141,8 +141,8 @@ export const BannerFileForm = ({
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="Siemens">Siemens</SelectItem>
-                    <SelectItem value="DEIF">DEIF</SelectItem>
-                    <SelectItem value="pro-face">Pro-face</SelectItem>
+                    <SelectItem value="Deif Group">DEIF</SelectItem>
+                    <SelectItem value="Pro-Face">Pro-face</SelectItem>
                     <SelectItem value="Schneider Electric">
                       Schneider Electric
                     </SelectItem>
