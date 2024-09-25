@@ -5,11 +5,13 @@ import { columns } from "./columns";
 import { DataTable } from "@/components/data-table";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetContacts } from "@/features/contact/use-get-contacts";
-// import { useNewContactOpen } from "@/hooks/use-new-contact";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+import { useNewContactOpen } from "@/hooks/use-new-contact";
 
 const Account = () => {
   const { data, isPending } = useGetContacts();
-  // const { onOpen } = useNewContactOpen();
+  const { onOpen } = useNewContactOpen();
 
   if (isPending) {
     return (

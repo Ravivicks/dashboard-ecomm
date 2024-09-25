@@ -113,6 +113,9 @@ export const BannerFileForm = ({
                     <SelectItem value="industrial-automation">
                       Industrial Automation
                     </SelectItem>
+                    <SelectItem value="partner-banner">
+                      Partner Banner
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </FormControl>
