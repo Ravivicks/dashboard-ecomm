@@ -4,6 +4,7 @@ import { IPartnerBanner, IProduct, UpdateProductProps } from "@/types";
 import Product from "../models/product.model";
 import { connectToDB } from "../mongoose";
 import PartnerBanner from "../models/banner.model";
+import { randomUUID } from "crypto";
 
 const CHUNK_SIZE = 500; // Adjust based on performance testing
 
@@ -38,32 +39,72 @@ export async function updateBulkProducts(products: IProduct[]) {
       const chunk = products.slice(i, i + CHUNK_SIZE);
 
       for (const product of chunk) {
-        // Proceed with the update if valid
+        const currentDate = new Date().toISOString().split("T")[0]; // Get the current date in 'YYYY-MM-DD' format
+
+        let updateFields: any = {
+          machineCode: product.machineCode,
+          category: product.category,
+          quantity: product.quantity,
+          subCategory: product.subCategory,
+          brand: product.brand,
+        };
+
+        // Perform the update or upsert (create a new entry if not found)
         const result = await Product.updateMany(
           {
-            title: { $regex: product.machineCode, $options: "i" }, // Match title using regex
+            $or: [
+              { title: { $regex: product.machineCode, $options: "i" } }, // Match title using regex
+              { machineCode: product.machineCode }, // Match exact machineCode
+            ],
           },
           {
-            $set: {
-              machineCode: product.machineCode,
-              category: product.category,
-              quantity: product.quantity,
-            },
-          }
+            $set: updateFields,
+          },
+          { upsert: true, new: true } // Use upsert to create new entries if not found
         );
 
-        if (result.modifiedCount === 0) {
-          console.error(
-            `No documents updated for machineCode: ${product.machineCode}`
+        // Check if a new document was inserted (i.e., a new product was created)
+        if (result.upsertedCount > 0 && result.upsertedId) {
+          const randomString = randomUUID(); // Generate a unique UUID string
+          const generatedUrl = `${product.machineCode}-${currentDate}-${randomString}`;
+
+          // Only update the newly created product with title and other fields
+          await Product.updateOne(
+            { _id: result.upsertedId }, // Use the upserted ID to identify the newly created product
+            {
+              $set: {
+                url: generatedUrl, // Add the generated URL
+                title: product.title, // Add the title only for new products
+                currency: product.currency || "$", // Required
+                image: "/images/no-product.jpg", // Default image
+                sliderImages: product.sliderImages || [], // Required
+                discount: product.discount || "0", // Required
+                currentPrice: product.currentPrice || 0, // Required
+                originalPrice: product.originalPrice || 0, // Required
+                brand: product.brand || "other", // Required
+                type: "all", // Default type
+                lowestPrice: 0, // Default value
+                reviewsCount: 100, // Default to 0 if not provided
+                stars: 5, // Default to 0 if not provided
+                isOutOfStock: false, // Default to false if not provided
+              },
+            }
           );
         }
       }
     }
 
-    return { result: "All products updated successfully" };
-  } catch (error) {
-    console.error("Error updating bulk products:", error);
-    return { error: "Failed to update products" };
+    return { result: "All products updated or created successfully" };
+  } catch (error: any) {
+    if (error.code === 11000) {
+      console.error(
+        "Duplicate key error, skipping URL update:",
+        error.keyValue
+      );
+    } else {
+      console.error("Error updating bulk products:", error);
+    }
+    return { error: "Failed to update or create products" };
   }
 }
 

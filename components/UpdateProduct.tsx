@@ -16,8 +16,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { ProductProps, UpdateProductProps } from "@/types";
-import { useCreateBulkProduct } from "@/features/products/use-bulk-products";
+import { UpdateProductProps } from "@/types";
 import { useUser } from "@clerk/nextjs";
 import { useUpdateBulkProduct } from "@/features/products/use-update-bulk-product";
 import { useOpenBulkProductUpdate } from "@/hooks/use-open-bulk-update-by-excel";
@@ -80,7 +79,10 @@ export default function UpdateProduct() {
         const sameProduct = json.map((product) => ({
           category: product["Item Category"],
           quantity: product["Count"],
-          machineCode: product["Item MLFB/Part Number"],
+          machineCode: product["Item MLFB"],
+          subCategory: product["Sub Category"],
+          title: product["Item Description"],
+          brand: product["Category"],
         }));
 
         const plainProduct = JSON.parse(JSON.stringify(sameProduct));

@@ -3,7 +3,7 @@ import mongoose, { Model, Schema } from "mongoose";
 
 const productSchema: Schema = new Schema(
   {
-    url: { type: String, required: true, unique: true },
+    url: { type: String }, // Allow null or undefined values but enforce uniqueness on non-null values
     currency: { type: String, required: true },
     image: { type: String, required: true },
     sliderImages: { type: Array, required: true },
@@ -21,13 +21,14 @@ const productSchema: Schema = new Schema(
     pdfFile: { type: String },
     type: { type: String },
     quantity: { type: Number },
+    subCategory: { type: String },
     minQuantity: { type: Number },
     lowestPrice: { type: Number },
     highestPrice: { type: Number },
     averagePrice: { type: Number },
     discountRate: { type: Number },
     description: { type: String },
-    machineCode: { type: String },
+    machineCode: { type: String }, // Machine code field to be matched in updates
     category: { type: String },
     productDescription: { type: String },
     productInformationTech: [
@@ -46,7 +47,6 @@ const productSchema: Schema = new Schema(
     stars: { type: Number },
     isOutOfStock: { type: Boolean, default: false },
     users: [{ email: { type: String, required: true } }],
-    default: [],
   },
   { timestamps: true }
 );

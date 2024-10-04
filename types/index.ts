@@ -35,6 +35,7 @@ export type IProduct = {
   description: string;
   productDescription: string;
   category: string;
+  subCategory: string;
   reviewsCount: number;
   stars: number;
   isOutOfStock: Boolean;
@@ -78,9 +79,11 @@ export type ProductProps = {
 export type UpdateProductProps = {
   "Item Category": string;
   "Item Description": string;
-  "Item MLFB/Part Number": string;
+  "Item MLFB": string;
   "Item Rating": string;
   Count: number;
+  "Sub Category": string;
+  Category: string;
 };
 
 export type EnquireProps = {
