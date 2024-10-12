@@ -8,6 +8,7 @@ import NewContactSheet from "@/features/contact/new-contact-sheet";
 import EditEnquirySheet from "@/features/enquiry/edit-enquiry-sheet";
 import BulkProductSheet from "@/features/products/bulk-product-sheet";
 import ProductUpdateDialog from "@/features/products/bulk-product-update-dialog";
+import BulkProductUpdateLocaleSheet from "@/features/products/bulk-update-locale-sheet";
 import BulkProductUpdateSheet from "@/features/products/bulk-update-sheet";
 import EditProductSheet from "@/features/products/edit-product-sheet";
 import EditReviewSheet from "@/features/review/edit-review-sheet";
@@ -33,6 +34,7 @@ const SheetProvider = () => {
       <BulkProductUpdateSheet />
       <EditOrderSheet />
       <EditReviewSheet />
+      <BulkProductUpdateLocaleSheet />
     </>
   );
 };

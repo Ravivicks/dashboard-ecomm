@@ -169,6 +169,58 @@ export const BannerFileForm = ({
           )}
         />
 
+        {form.getValues("title") === "Featured-category" && (
+          <FormField
+            name="category"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Featured Category</FormLabel>
+                <FormControl>
+                  <Select
+                    disabled={disabled}
+                    value={field.value}
+                    onValueChange={(value) => field.onChange(value)}
+                  >
+                    <SelectTrigger>
+                      <Button variant="outline" className="w-full">
+                        {field.value || "Select Category"}
+                      </Button>
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Siemens Drive">
+                        Siemens Drive
+                      </SelectItem>
+                      <SelectItem value="Siemens Switchgear">
+                        Siemens Switchgear
+                      </SelectItem>
+                      <SelectItem value="Siemens PLC">Siemens PLC</SelectItem>
+                      <SelectItem value="Proface HMI">Proface HMI</SelectItem>
+                      <SelectItem value="Siemens HMI">Siemens HMI</SelectItem>
+                      <SelectItem value="Telemecanique">
+                        Telemecanique
+                      </SelectItem>
+                      <SelectItem value="Siemens Power Supply">
+                        Siemens Power Supply
+                      </SelectItem>
+                      <SelectItem value="Siemens Others">
+                        Siemens Others
+                      </SelectItem>
+                      <SelectItem value="Siemens Software">
+                        Siemens Software
+                      </SelectItem>
+                      <SelectItem value="Other">Other</SelectItem>
+                      <SelectItem value=" Diesel Gen. Controller">
+                        {" "}
+                        Diesel Gen. Controller
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+              </FormItem>
+            )}
+          />
+        )}
+
         <FormField
           name="image"
           render={({ field }) => (

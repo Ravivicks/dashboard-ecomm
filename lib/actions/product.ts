@@ -5,6 +5,12 @@ import Product from "../models/product.model";
 import { connectToDB } from "../mongoose";
 import PartnerBanner from "../models/banner.model";
 import { randomUUID } from "crypto";
+import Esproduct from "../models/esproduct.model";
+import Caproduct from "../models/caproduct.model";
+import Frproduct from "../models/frproduct.model";
+import Itproduct from "../models/itproduct.model";
+import Koproduct from "../models/koproduct.model";
+import Ptproduct from "../models/ptproduct.model";
 
 const CHUNK_SIZE = 500; // Adjust based on performance testing
 
@@ -107,6 +113,53 @@ export async function updateBulkProducts(products: IProduct[]) {
     return { error: "Failed to update or create products" };
   }
 }
+export async function updateBulkProductsLocale(products: IProduct[]) {
+  try {
+    await connectToDB();
+
+    for (let i = 0; i < products.length; i += CHUNK_SIZE) {
+      const chunk = products.slice(i, i + CHUNK_SIZE);
+
+      // Prepare bulk operations for the current chunk
+      const bulkOperations = chunk.map((product) => {
+        let updateFields: any = {
+          title: product.title,
+          description: product.description,
+          productDescription: product.productDescription,
+          currency: product.currency,
+        };
+
+        // Return the update operation for each product based on exact _id match
+        return {
+          updateOne: {
+            filter: { _id: product._id }, // Match exactly by _id
+            update: { $set: updateFields },
+            upsert: false, // Do not create new entries, only update existing ones
+          },
+        };
+      });
+
+      // Execute the bulk operations for the current chunk
+      const result = await Ptproduct.bulkWrite(bulkOperations);
+
+      console.log(
+        `Chunk processed: ${result.modifiedCount} documents updated.`
+      );
+    }
+
+    return { result: "All products updated successfully" };
+  } catch (error: any) {
+    if (error.code === 11000) {
+      console.error(
+        "Duplicate key error, skipping URL update:",
+        error.keyValue
+      );
+    } else {
+      console.error("Error updating bulk products:", error);
+    }
+    return { error: "Failed to update products" };
+  }
+}
 
 export async function getAllProducts(): Promise<IProduct[] | any> {
   // page: number = 1,
@@ -189,6 +242,7 @@ export async function updateProduct(
     category: string;
     machineCode: string;
     type: string;
+    subCategory: string;
 
     // Add slider images as an array of URLs
   }>

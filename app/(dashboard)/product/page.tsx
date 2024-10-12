@@ -10,12 +10,14 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useOpenBulkProduct } from "@/hooks/use-open-bulk-product";
 import { useUpdateDialogOpen } from "@/hooks/use-product-open";
 import { useOpenBulkProductUpdate } from "@/hooks/use-open-bulk-update-by-excel";
+import { useOpenBulkProductLocaleUpdate } from "@/hooks/use-open-bulk-locale-update";
 
 const Account = () => {
   const { data, isPending } = useGetProducts();
   const { onOpen } = useOpenBulkProduct();
   const { onOpen: updateOpen } = useUpdateDialogOpen();
   const { onOpen: updateBulkOpen } = useOpenBulkProductUpdate();
+  const { onOpen: updateBulkLocaleOpen } = useOpenBulkProductLocaleUpdate();
 
   if (isPending) {
     return (
@@ -60,6 +62,9 @@ const Account = () => {
               <Button size="sm" onClick={updateBulkOpen}>
                 <Edit2 className="size-4 mr-2" /> Update Bulk Product
               </Button>
+              {/* <Button size="sm" onClick={updateBulkLocaleOpen}>
+                <Edit2 className="size-4 mr-2" /> Update Bulk Product Locale
+              </Button> */}
             </div>
           </CardHeader>
           <CardContent>

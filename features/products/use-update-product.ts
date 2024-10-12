@@ -16,6 +16,7 @@ export const useEditProduct = (id?: string) => {
       category: string;
       machineCode: string;
       type: string;
+      subCategory: string;
     }) => {
       const response = await updateProduct(id as string, updateData);
       return response;

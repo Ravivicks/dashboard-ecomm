@@ -36,6 +36,7 @@ export const productFormSchema = z.object({
   quantity: z.number(),
   minQuantity: z.number(), // Array of strings (URLs)
   category: z.string(),
+  subCategory: z.string(),
   machineCode: z.string(),
   type: z.string(),
 });

@@ -14,6 +14,12 @@ import { productFormSchema } from "@/lib/zod-schema";
 import { Plus, Trash } from "lucide-react";
 import FieldArrayComponent from "@/components/FieldArray";
 import { useSlideOpen } from "@/hooks/use-slide-open";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@/components/ui/select";
 
 type FormValues = z.infer<typeof productFormSchema>;
 
@@ -68,23 +74,6 @@ export const ProductForm = ({
         />
         <div className="flex gap-2">
           <FormField
-            name="machineCode"
-            control={form.control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Product Code</FormLabel>
-                <FormControl>
-                  <Input
-                    // readOnly
-                    disabled={disabled}
-                    placeholder="Product Code"
-                    {...field}
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          <FormField
             name="category"
             control={form.control}
             render={({ field }) => (
@@ -94,6 +83,22 @@ export const ProductForm = ({
                   <Input
                     disabled={disabled}
                     placeholder="Product Category"
+                    {...field}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="subCategory"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Sub-Category</FormLabel>
+                <FormControl>
+                  <Input
+                    disabled={disabled}
+                    placeholder="Product Sub-Category"
                     {...field}
                   />
                 </FormControl>
@@ -187,22 +192,53 @@ export const ProductForm = ({
             )}
           />
         </div>
-        <FormField
-          name="type"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Product Type</FormLabel>
-              <FormControl>
-                <Input
-                  disabled={disabled}
-                  placeholder="Product Type"
-                  {...field}
-                />
-              </FormControl>
-            </FormItem>
-          )}
-        />
+        <div className="flex gap-2">
+          <FormField
+            name="type"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Type</FormLabel>
+                <FormControl>
+                  <Select
+                    disabled={disabled}
+                    value={field.value}
+                    onValueChange={(value) => field.onChange(value)}
+                  >
+                    <SelectTrigger>
+                      <Button variant="outline" className="w-full">
+                        {field.value || "Select Type"}
+                      </Button>
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All</SelectItem>
+                      <SelectItem value="best-deal">Best Deal</SelectItem>
+                      <SelectItem value="top-selling">Top Selling</SelectItem>
+                      <SelectItem value="best-choice">Best Choice</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="machineCode"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Product Code</FormLabel>
+                <FormControl>
+                  <Input
+                    // readOnly
+                    disabled={disabled}
+                    placeholder="Product Code"
+                    {...field}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+        </div>
         {/* Image Field */}
 
         <FormField

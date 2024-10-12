@@ -85,6 +85,13 @@ export type UpdateProductProps = {
   "Sub Category": string;
   Category: string;
 };
+export type UpdateProductLocaleProps = {
+  _id: string;
+  currency: string;
+  "description spanish": string;
+  productDescriptionspanish: string;
+  titlespanish: string;
+};
 
 export type EnquireProps = {
   _id: string;

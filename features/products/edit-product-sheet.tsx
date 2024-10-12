@@ -35,6 +35,7 @@ const EditProductSheet = () => {
       category: values.category,
       machineCode: values.machineCode,
       type: values.type,
+      subCategory: values.subCategory,
     };
 
     editMutation.mutate(updateData, {
@@ -59,6 +60,7 @@ const EditProductSheet = () => {
         category: productQuery.data.category,
         machineCode: productQuery.data.machineCode,
         type: productQuery.data.type,
+        subCategory: productQuery.data.subCategory,
       }
     : {
         title: "",
@@ -71,6 +73,7 @@ const EditProductSheet = () => {
         category: "",
         machineCode: "",
         type: "",
+        subCategory: "",
       };
 
   return (
